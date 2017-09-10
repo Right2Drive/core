@@ -9,6 +9,7 @@ let server;
 const root = path.resolve(__dirname, '..')
 const compiler = webpack(webpackConfig())
 
+/** Fork new process for the node server */
 function runServer() {
   return fork(path.join(root, 'dist', 'app.js'))
 }
@@ -20,6 +21,7 @@ rm(path.join(root, 'dist'), err => {
       chunks: false,  // Makes the build much quieter
       colors: true    // Shows colors in the console
     }));
+    // If the server is running it we need to kill & restart it
     if (server) {
       server.send({
         type: 'close'
@@ -30,7 +32,7 @@ rm(path.join(root, 'dist'), err => {
         }
       })
       server = null
-    } else {
+    } else { // First run, just start server
       server = runServer()
     }
   })

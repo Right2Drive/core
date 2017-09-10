@@ -2,19 +2,25 @@ const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals');
 
+const root = path.resolve(__dirname, '..')
+
+function resolve(dir) {
+  return path.join(root, dir)
+}
+
 module.exports = function () {
   return {
     entry: {
-      app: path.resolve(__dirname, '..', 'src', 'index.ts')
+      app: path.join(root, 'src', 'index.ts')
     },
     output: {
-      path: path.resolve(__dirname, '..', 'dist'),
+      path: path.join(root, 'dist'),
       filename: '[name].js'
     },
     resolve: {
       extensions: ['.ts', '.js', '.json'],
       alias: {
-        '@': path.resolve(__dirname, '..', 'src')
+        '@': path.join(root, 'src')
       }
     },
     module: {
@@ -23,11 +29,23 @@ module.exports = function () {
         {
           enforce: 'pre',
           test: /\.js$/,
-          loader: "source-map-loader"
+          loader: "source-map-loader",
+          options: {
+            configFile: path.join(root, 'tslint.json'),
+            emitErrors: true,
+            fix: false
+          }
         },
-        // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+        // All .ts files will be linted by 'tslint'
         {
-          test: /\.tsx?$/,
+          enforce: 'pre',
+          test: /\.ts$/,
+          loader: 'tslint-loader',
+          include: [resolve('src'), resolve('test')]
+        },
+        // All files with a '.ts' extension will be handled by 'awesome-typescript-loader'.
+        {
+          test: /\.ts$/,
           loaders: [
             "awesome-typescript-loader"
           ],

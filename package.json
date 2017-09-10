@@ -7,23 +7,27 @@
   "license": "MIT",
   "scripts": {
     "start": "node build/build.js",
-    "build": "npm run build:dev",
+    "start:prod": "node dist/app.js",
+    "build": "npm run build:prod",
     "build:dev": "npm run webpack -- --env=dev",
+    "build:prod": "npm run webpack -- --env=prod",
     "webpack": "./node_modules/.bin/webpack"
   },
   "dependencies": {
+    "body-parser": "^1.18.0",
     "express": "^4.15.4",
     "typescript": "^2.5.2"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.16.5",
     "@types/express": "^4.0.37",
     "@types/node": "^8.0.28",
     "awesome-typescript-loader": "^3.2.3",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
     "rimraf": "^2.6.1",
     "source-map-loader": "^0.2.1",
     "tslint": "^5.7.0",
+    "tslint-config-airbnb": "^5.2.1",
+    "tslint-loader": "^3.5.3",
     "webpack": "^3.5.6",
     "webpack-merge": "^4.1.0",
     "webpack-node-externals": "^1.6.0"
