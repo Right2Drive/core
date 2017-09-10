@@ -7,5 +7,8 @@ dist/*
 # NPM
 npm-debug.log
 
+# Yarn
+yarn-error.log
+
 # Editor
 .vscode/*

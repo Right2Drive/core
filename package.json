@@ -6,9 +6,10 @@
   "author": "Right2Drive",
   "license": "MIT",
   "scripts": {
-    "start": "",
+    "start": "node build/build.js",
     "build": "npm run build:dev",
-    "build:dev": "./node_modules/.bin/webpack --env=dev"
+    "build:dev": "npm run webpack -- --env=dev",
+    "webpack": "./node_modules/.bin/webpack"
   },
   "dependencies": {
     "express": "^4.15.4",
@@ -20,8 +21,11 @@
     "awesome-typescript-loader": "^3.2.3",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "rimraf": "^2.6.1",
     "source-map-loader": "^0.2.1",
     "tslint": "^5.7.0",
-    "webpack": "^3.5.6"
+    "webpack": "^3.5.6",
+    "webpack-merge": "^4.1.0",
+    "webpack-node-externals": "^1.6.0"
   }
 }

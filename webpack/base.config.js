@@ -1,7 +1,8 @@
 const webpack = require('webpack')
 const path = require('path')
+const nodeExternals = require('webpack-node-externals');
 
-module.exports = function() {
+module.exports = function () {
   return {
     entry: {
       app: path.resolve(__dirname, '..', 'src', 'index.ts')
@@ -33,6 +34,7 @@ module.exports = function() {
           exclude: [/\.(spec|e2e|d)\.ts$/]
         }]
     },
-    target: 'node'
+    target: 'node',
+    externals: [nodeExternals()]
   }
 }
