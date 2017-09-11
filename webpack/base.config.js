@@ -4,23 +4,24 @@ const nodeExternals = require('webpack-node-externals');
 
 const root = path.resolve(__dirname, '..')
 
-function resolve(dir) {
-  return path.join(root, dir)
+function resolve(dirOrFile) {
+  return path.join(root, dirOrFile)
 }
 
 module.exports = function () {
   return {
     entry: {
-      app: path.join(root, 'src', 'index.ts')
+      app: path.join(root, 'src', 'index.ts'),
+      test: path.join(root, 'test', 'index.ts')
     },
     output: {
-      path: path.join(root, 'dist'),
+      path: resolve('dist'),
       filename: '[name].js'
     },
     resolve: {
       extensions: ['.ts', '.js', '.json'],
       alias: {
-        '@': path.join(root, 'src')
+        '@': resolve('src')
       }
     },
     module: {
@@ -29,19 +30,26 @@ module.exports = function () {
         {
           enforce: 'pre',
           test: /\.js$/,
-          loader: "source-map-loader",
-          options: {
-            configFile: path.join(root, 'tslint.json'),
-            emitErrors: true,
-            fix: false
-          }
+          loader: "source-map-loader"
         },
         // All .ts files will be linted by 'tslint'
         {
           enforce: 'pre',
           test: /\.ts$/,
           loader: 'tslint-loader',
-          include: [resolve('src'), resolve('test')]
+          include: [resolve('src'), resolve('test')],
+          options: {
+            configuration: {
+              extends: "tslint-config-airbnb",
+              rules: {
+                'only-arrow-function': false
+              }
+            },
+            emitErrors: true,
+            fix: false,
+            failOnHint: true,
+            tsConfigFile: resolve('tsconfig.json')
+          }
         },
         // All files with a '.ts' extension will be handled by 'awesome-typescript-loader'.
         {

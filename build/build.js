@@ -10,8 +10,8 @@ const root = path.resolve(__dirname, '..')
 const compiler = webpack(webpackConfig())
 
 /** Fork new process for the node server */
-function runServer() {
-  return fork(path.join(root, 'dist', 'app.js'))
+function runServer(firstRun = false) {
+  return fork(path.join(root, 'dist', 'app.js'), [firstRun ? 'FIRST_RUN' : 'REBUILD'])
 }
 
 rm(path.join(root, 'dist'), err => {
@@ -23,9 +23,11 @@ rm(path.join(root, 'dist'), err => {
     }));
     // If the server is running it we need to kill & restart it
     if (server) {
-      server.send({
-        type: 'close'
-      })
+      if (server.connected) {
+        server.send({
+          type: 'close'
+        })
+      }
       server.on('message', (msg) => {
         if (msg && msg.type === 'close') {
           server = runServer()
@@ -33,7 +35,7 @@ rm(path.join(root, 'dist'), err => {
       })
       server = null
     } else { // First run, just start server
-      server = runServer()
+      server = runServer(true)
     }
   })
 })

@@ -1,20 +1,17 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
+import * as Express from 'express';
 
-const app = express();
-const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: true }));
+const app = Express();
 const port = process.env.PORT || 8090;
 const isDevelopment = process.env.NODE_ENV === 'development';
+const isLogging = process.argv[2] === 'FIRST_RUN';
 
 const server = app.listen(port, () => {
-  console.log(`LishaBora Hub running on localhost:${port}`);
+  isLogging && console.log(`LishaBora Hub running on http://localhost:${port}`);
 });
 
 process.on('message', (msg) => {
   if (msg && msg.type === 'close') {
     server.close(() => {
-      console.log('Server shut down');
       process.send({
         type: 'close',
       });

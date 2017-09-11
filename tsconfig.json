@@ -6,6 +6,9 @@
     "noImplicitAny": true,
     "lib": [
       "es6"
+    ],
+    "types": [
+      "webpack-env"
     ]
   },
   "exclude": [
