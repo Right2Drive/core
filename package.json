@@ -11,14 +11,23 @@
     "build": "npm run build:prod",
     "build:dev": "npm run webpack -- --env=dev",
     "build:prod": "npm run webpack -- --env=prod",
+    "watch": "npm run build:dev -- --watch",
     "webpack": "./node_modules/.bin/webpack",
     "test": "npm run test:unit",
-    "test:unit": "./node_modules/.bin/mocha dist/test.js"
+    "test:unit": "./node_modules/.bin/mocha dist/test.js",
+    "lint": "npm run lint:src && npm run lint:test",
+    "lint:fix": "npm run lint:src:fix && npm run lint:test:fix",
+    "lint:test": "npm run lint:core -- \"test/**/*.ts\"",
+    "lint:test:fix": "npm run lint:test -- --fix",
+    "lint:src": "npm run lint:core -- \"src/**/*.ts\"",
+    "lint:src:fix": "npm run lint:src -- --fix",
+    "lint:core": "node_modules/.bin/tslint -c tslint.json"
   },
   "dependencies": {
     "body-parser": "^1.18.0",
     "express": "^4.15.4",
     "mocha": "^3.5.2",
+    "tslint-loader": "^3.5.3",
     "typescript": "^2.5.2"
   },
   "devDependencies": {
@@ -32,7 +41,6 @@
     "source-map-loader": "^0.2.1",
     "tslint": "^5.7.0",
     "tslint-config-airbnb": "^5.2.1",
-    "tslint-loader": "^3.5.3",
     "webpack": "^3.5.6",
     "webpack-merge": "^4.1.0",
     "webpack-node-externals": "^1.6.0"

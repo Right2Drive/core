@@ -16,7 +16,8 @@ module.exports = function () {
     },
     output: {
       path: resolve('dist'),
-      filename: '[name].js'
+      filename: '[name].js',
+      publicPath: '/'
     },
     resolve: {
       extensions: ['.ts', '.js', '.json'],
@@ -39,12 +40,7 @@ module.exports = function () {
           loader: 'tslint-loader',
           include: [resolve('src'), resolve('test')],
           options: {
-            configuration: {
-              extends: "tslint-config-airbnb",
-              rules: {
-                'only-arrow-function': false
-              }
-            },
+            configFile: resolve('tslint.json'),
             emitErrors: true,
             fix: false,
             failOnHint: true,

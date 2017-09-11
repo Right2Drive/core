@@ -37,5 +37,6 @@ rm(path.join(root, 'dist'), err => {
     } else { // First run, just start server
       server = runServer(true)
     }
+    console.log('Webpack build completed :)')
   })
 })
