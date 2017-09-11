@@ -6,12 +6,15 @@
   "author": "Right2Drive",
   "license": "MIT",
   "scripts": {
-    "start": "node build/build.js",
+    "start": "npm run build:dev && npm run concurrently -- \"npm run watch\" \"npm run serve\"",
+    "debug": "npm run build:dev && npm run concurrently -- \"npm run watch\" \"npm run serve:debug\"",
     "start:prod": "node dist/app.js",
     "build": "npm run build:prod",
     "build:dev": "npm run webpack -- --env=dev",
     "build:prod": "npm run webpack -- --env=prod",
     "watch": "npm run build:dev -- --watch",
+    "serve": "nodemon dist/app.js",
+    "serve:debug": "nodemon --inspect dist/app.js",
     "webpack": "./node_modules/.bin/webpack",
     "test": "npm run test:unit",
     "test:unit": "./node_modules/.bin/mocha dist/test.js",
@@ -21,7 +24,8 @@
     "lint:test:fix": "npm run lint:test -- --fix",
     "lint:src": "npm run lint:core -- \"src/**/*.ts\"",
     "lint:src:fix": "npm run lint:src -- --fix",
-    "lint:core": "node_modules/.bin/tslint -c tslint.json"
+    "lint:core": "node_modules/.bin/tslint -c tslint.json",
+    "concurrently": "node_modules/.bin/concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\""
   },
   "dependencies": {
     "body-parser": "^1.18.0",
@@ -37,6 +41,8 @@
     "@types/node": "^8.0.28",
     "@types/webpack-env": "^1.13.1",
     "awesome-typescript-loader": "^3.2.3",
+    "concurrently": "^3.5.0",
+    "nodemon": "^1.12.0",
     "rimraf": "^2.6.1",
     "source-map-loader": "^0.2.1",
     "tslint": "^5.7.0",
