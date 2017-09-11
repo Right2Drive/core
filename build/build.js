@@ -11,7 +11,12 @@ const compiler = webpack(webpackConfig())
 
 /** Fork new process for the node server */
 function runServer(firstRun = false) {
-  return fork(path.join(root, 'dist', 'app.js'), [firstRun ? 'FIRST_RUN' : 'REBUILD'])
+  const args = [
+    firstRun ? 'FIRST_RUN' : 'REBUILD',
+    '--debug-brk=8091',
+    '--inspect'
+  ]
+  return fork(path.join(root, 'dist', 'app.js'), args)
 }
 
 rm(path.join(root, 'dist'), err => {
@@ -30,13 +35,14 @@ rm(path.join(root, 'dist'), err => {
       }
       server.on('message', (msg) => {
         if (msg && msg.type === 'close') {
+          if (server.connected) {
+            server.kill()
+          }
           server = runServer()
         }
       })
-      server = null
     } else { // First run, just start server
       server = runServer(true)
     }
-    console.log('Webpack build completed :)')
   })
 })
