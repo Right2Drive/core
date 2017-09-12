@@ -6,7 +6,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const isLogging = process.argv[2] === 'FIRST_RUN';
 
 const server = app.listen(port, () => {
-  isLogging && console.log(`LishaBora Hub running on http://localhost:${port}`);
+  isLogging && console.log(`LishaBora Core running on http://localhost:${port}`);
 });
 
 process.on('message', (msg) => {

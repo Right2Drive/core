@@ -1,7 +1,7 @@
 {
-  "name": "lishabora-hub",
+  "name": "lishabora-core",
   "version": "1.0.0",
-  "description": "Data hub for LishaBora Software",
+  "description": "Data Core for LishaBora Software",
   "main": "src/index.ts",
   "author": "Right2Drive",
   "license": "MIT",
