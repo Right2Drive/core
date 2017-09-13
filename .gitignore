@@ -17,3 +17,6 @@ yarn-error.log
 
 # Secret Files
 .env
+
+# Logs
+logs/**/*.log

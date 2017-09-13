@@ -25,17 +25,17 @@ module.exports = function () {
       extensions: ['.ts', '.js', '.json'],
       alias: {
         '@': resolve('src'),
-        '@root': root,
-        '@config': resolve('config')
+        '@root': root
       },
+      symlinks: false,
       plugins: [
-        new TsConfigPathsPlugin({
-          configFileName: 'tsconfig',
-          compiler: 'typescript'
-        })
+        new TsConfigPathsPlugin()
       ]
     },
     target: 'node',
+    node: {
+      __dirname: true
+    },
     externals: [nodeExternals()],
     module: {
       rules: [
@@ -64,7 +64,8 @@ module.exports = function () {
           loaders: [
             "awesome-typescript-loader"
           ]
-        }]
+        }
+      ]
     }
   }
 }

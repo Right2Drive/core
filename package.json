@@ -1,7 +1,7 @@
 {
-  "name": "lishabora-core",
+  "name": "core",
   "version": "1.0.0",
-  "description": "Data Core for LishaBora Software",
+  "description": "The Core",
   "main": "src/index.ts",
   "author": "Right2Drive",
   "license": "MIT",
@@ -35,7 +35,8 @@
     "mocha": "^3.5.2",
     "mysql": "^2.14.1",
     "tslint-loader": "^3.5.3",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.2",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.5",
@@ -45,6 +46,7 @@
     "@types/mysql": "^0.0.34",
     "@types/node": "^8.0.28",
     "@types/webpack-env": "^1.13.1",
+    "@types/winston": "^2.3.5",
     "awesome-typescript-loader": "^3.2.3",
     "concurrently": "^3.5.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
