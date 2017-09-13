@@ -4,6 +4,7 @@
   ],
   "rules": {
     "ter-prefer-arrow-callback": false,
-    "no-console": true
+    "no-console": true,
+    "no-increment-decrement": false
   }
 }

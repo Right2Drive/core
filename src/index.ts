@@ -1,11 +1,10 @@
 import * as Express from 'express';
 import { config } from 'dotenv';
 import * as path from 'path';
-import * as bodyParser from 'body-parser';
 
 // Import database to initialize connection
 import { connect } from '@/context/database';
-import logger, { initLogger } from '@/services/logger';
+import logger, { initLogger } from '@/utilities/logger';
 
 // Load configuration from .env file at root
 config({
@@ -22,7 +21,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Configure middleware
 app.use(morgan);
-app.use(bodyParser);
 
 // Start listening for requests
 const server = app.listen(port, () => {
