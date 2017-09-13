@@ -65,7 +65,7 @@ function handleExceptions(name: string) {
 
 /** Prepare objects for the logger */
 function prepareMessage(...msg: LogMessage[]): string {
-  return msg.map(String).join('\n');
+  return msg.map(m => JSON.stringify(m)).join('\n');
 }
 
 /**
