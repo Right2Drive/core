@@ -3,8 +3,8 @@ import { config } from 'dotenv';
 import * as path from 'path';
 
 // Import database to initialize connection
-import { connect } from '@/context/database';
 import logger, { initLogger } from '@/utilities/logger';
+import router from '@/router';
 
 // Load configuration from .env file at root
 config({
@@ -17,7 +17,6 @@ const morgan = initLogger();
 // Setup express server
 const app = Express();
 const port = process.env.PORT || 8090;
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Configure middleware
 app.use(morgan);
@@ -27,7 +26,5 @@ const server = app.listen(port, () => {
   logger.info(`The Core is running on http://localhost:${port}`);
 });
 
-// Connect database
-connect().subscribe((err) => {
-  logger.error(err);
-});
+// Setup routes
+app.use('/api', router);
