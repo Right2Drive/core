@@ -3,6 +3,7 @@
     "tslint-config-airbnb"
   ],
   "rules": {
-    "ter-prefer-arrow-callback": false
+    "ter-prefer-arrow-callback": false,
+    "no-console": true
   }
 }

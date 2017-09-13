@@ -14,3 +14,9 @@ yarn-error.log
 .vscode/*
 !.vscode/launch.json
 !.vscode/tasks.json
+
+# Secret Files
+.env
+
+# Logs
+logs/**/*.log

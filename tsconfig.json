@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@root/*": ["./*"]
+    },
     "target": "es2015",
     "module": "commonjs",
     "sourceMap": true,
     "noImplicitAny": true,
     "lib": [
-      "es6"
-    ],
-    "types": [
-      "webpack-env"
+      "es6",
+      "dom"
     ]
   },
   "exclude": [
