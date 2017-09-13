@@ -1,9 +1,11 @@
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals');
+const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 const root = path.resolve(__dirname, '..')
 
+/** Resolve file or directory in root */
 function resolve(dirOrFile) {
   return path.join(root, dirOrFile)
 }
@@ -22,9 +24,19 @@ module.exports = function () {
     resolve: {
       extensions: ['.ts', '.js', '.json'],
       alias: {
-        '@': resolve('src')
-      }
+        '@': resolve('src'),
+        '@root': root
+      },
+      symlinks: false,
+      plugins: [
+        new TsConfigPathsPlugin()
+      ]
     },
+    target: 'node',
+    node: {
+      __dirname: true
+    },
+    externals: [nodeExternals()],
     module: {
       rules: [
         // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
@@ -41,9 +53,8 @@ module.exports = function () {
           include: [resolve('src'), resolve('test')],
           options: {
             configFile: resolve('tslint.json'),
-            emitErrors: true,
+            emitErrors: false,
             fix: false,
-            failOnHint: true,
             tsConfigFile: resolve('tsconfig.json')
           }
         },
@@ -52,11 +63,14 @@ module.exports = function () {
           test: /\.ts$/,
           loaders: [
             "awesome-typescript-loader"
-          ],
-          exclude: [/\.(spec|e2e|d)\.ts$/]
-        }]
+          ]
+        }
+      ]
     },
-    target: 'node',
-    externals: [nodeExternals()]
+    plugins: [
+      new webpack.DefinePlugin({
+        CORE_ROOT: JSON.stringify(resolve('.'))
+      })
+    ]
   }
 }
