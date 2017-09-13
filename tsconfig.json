@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@": ["src"],
-      "@root": ["./"]
+      "@/*": ["src/*"],
+      "@root/*": ["./*"]
     },
     "target": "es2015",
     "module": "commonjs",

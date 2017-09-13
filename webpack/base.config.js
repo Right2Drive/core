@@ -66,6 +66,11 @@ module.exports = function () {
           ]
         }
       ]
-    }
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        CORE_ROOT: JSON.stringify(resolve('.'))
+      })
+    ]
   }
 }

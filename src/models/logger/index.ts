@@ -5,19 +5,21 @@ import { LoggerInstance } from 'winston';
  */
 export interface LoggerMethods {
   /** Log using 'silly' level */
-  silly(msg: string): void;
+  silly(msg: LogMessage): void;
   /** Log using 'debug' level */
-  debug(msg: string): void;
+  debug(msg: LogMessage): void;
   /** Log using 'verbose' level */
-  verbose(msg: string): void;
+  verbose(msg: LogMessage): void;
   /** Log using 'info' level */
-  info(msg: string): void;
+  info(msg: LogMessage): void;
   /** Log using 'warn' level */
-  warn(msg: string): void;
+  warn(msg: LogMessage): void;
   /** Log using 'error' level */
-  error(msg: string): void;
+  error(msg: LogMessage): void;
 }
 
 export interface Loggers {
   [key: string]: LoggerInstance;
 }
+
+export type LogMessage = any;
