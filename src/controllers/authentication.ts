@@ -2,7 +2,7 @@ import createRouter from '@/utilities/functions/createRouter';
 
 const router = createRouter();
 
-router.post('/authenticate', (res, req) => {
+router.post('/local', (res, req) => {
   if (!res.body.username || !res.body.password) {
 
   }
