@@ -24,4 +24,4 @@ const server = app.listen(port, () => {
 });
 
 // Setup routes
-app.use('/api', router);
+app.use('/', router);

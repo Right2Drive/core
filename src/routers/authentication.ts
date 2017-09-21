@@ -2,8 +2,10 @@ import createRouter from '@/utilities/functions/createRouter';
 
 const router = createRouter();
 
-router.post('/local', (res, req) => {
+router.post('/login', (res, req) => {
+  if (!res.body.password || !res.body.username) {
 
+  }
 });
 
 export default router;
