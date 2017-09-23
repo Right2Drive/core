@@ -10,7 +10,7 @@ import { UserType } from '@/models/User/UserType';
 export function createToken(username: string, type: UserType) {
   // TODO: Look into expiry
   // TODO: Look into audience/issuer
-  return new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     jwt.sign(
       { // Payload
         username,

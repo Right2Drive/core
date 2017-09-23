@@ -1,7 +1,14 @@
 import { UserType } from '@/models/User/UserType';
 
-export default interface User {
+interface User {
   username: string;
-  password?: string;
   userType: UserType;
+}
+
+export interface DatabaseUser extends User {
+  hash: string;
+}
+
+export interface CreationUser extends User {
+  password: string;
 }
