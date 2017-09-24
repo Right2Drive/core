@@ -1,5 +1,6 @@
-import database, { tableNames } from '@/database';
+import database, { tableNames, normalize } from '@/database';
 import logger from '@/utilities/logger';
+import { DatabaseUser } from '@/models/User';
 
 const userTable = () => database()(tableNames.USERS);
 
@@ -19,5 +20,5 @@ const core = {
   },
 };
 
-export const findOne = (username: string) => core.findOne(username).then;
-export const findOneHash = (username: string) => core.findOneHash(username).then;
+export const findOne = (username: string) => normalize<DatabaseUser>(core.findOne(username));
+export const findOneHash = (username: string) => normalize<string>(core.findOneHash(username));

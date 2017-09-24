@@ -17,7 +17,7 @@
     "serve": "nodemon dist/app.js",
     "serve:debug": "nodemon --inspect dist/app.js",
     "webpack": "./node_modules/.bin/webpack",
-    "test": "npm run test:unit",
+    "test": "npm run build:dev && npm run test:unit",
     "test:unit": "./node_modules/.bin/mocha dist/test.js",
     "lint": "npm run lint:src && npm run lint:test",
     "lint:fix": "npm run lint:src:fix && npm run lint:test:fix",
@@ -31,6 +31,7 @@
   "dependencies": {
     "bcrypt": "1.0.3",
     "body-parser": "1.18.0",
+    "chai": "^4.1.2",
     "compression": "1.7.0",
     "cors": "2.8.4",
     "dotenv": "4.0.0",
@@ -48,6 +49,7 @@
   "devDependencies": {
     "@types/bcrypt": "1.0.0",
     "@types/body-parser": "1.16.5",
+    "@types/chai": "^4.0.4",
     "@types/compression": "0.0.34",
     "@types/cors": "2.8.1",
     "@types/dotenv": "4.0.1",
@@ -66,6 +68,7 @@
     "nodemon": "1.12.0",
     "rimraf": "2.6.1",
     "source-map-loader": "0.2.1",
+    "testdouble": "^3.2.6",
     "tslint": "5.7.0",
     "tslint-config-airbnb": "5.2.1",
     "webpack": "3.5.6",

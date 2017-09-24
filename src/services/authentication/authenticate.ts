@@ -1,5 +1,5 @@
 import { checkPassword } from '@/services/authentication/password';
-import * as UserData from '@/database/User';
+import * as UserDb from '@/database/User';
 import { DatabaseUser } from '@/models/User';
 import { createToken } from '@/services/authentication/token';
 
@@ -9,8 +9,8 @@ import { createToken } from '@/services/authentication/token';
  * @param username {string} User to check
  * @param password {string} Password to validate
  */
-export function authenticate(username: string, password: string) {
-  const bluebird = UserData.findOne(username)((user: DatabaseUser) => {
+export function authenticate(username: string, password: string, findUser = UserDb.findOne) {
+  const bluebird = findUser(username).then((user) => {
     return checkPassword(password, user.hash)
       .then((authenticated) => {
         if (authenticated) {

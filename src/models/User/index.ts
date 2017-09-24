@@ -1,6 +1,7 @@
 import { UserType } from '@/models/User/UserType';
 
 interface User {
+  [k: string]: any;
   username: string;
   userType: UserType;
 }

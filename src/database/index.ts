@@ -26,6 +26,14 @@ export const tableNames: Readonly<Table> = {
   USERS: 'users',
 };
 
+export function normalize<T>(qb: knex.QueryBuilder): Promise<T> {
+  // Use Promise.resolve to normalize to regualar ES6 Promise
+  return Promise.resolve(
+    // Call `then` merely to start the query to the database
+    qb.then(v => v),
+  );
+}
+
 /**
  * Database Query API
  */

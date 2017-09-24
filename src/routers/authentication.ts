@@ -6,8 +6,7 @@ const router = createRouter();
 
 router.post('/login', (req, res) => {
   if (!req.body.password || !req.body.username) {
-    res.sendStatus(400);
-    res.end();
+    res.sendStatus(400).end();
     return;
   }
 
