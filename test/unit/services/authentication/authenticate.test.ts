@@ -52,10 +52,10 @@ describe('authentication service authenticate module', function () {
       let token: string;
       try {
         token = await authenticate(username, 'wrong_password', injectedFunctions);
-        throw new Error('Should not have authenticated user');
       } catch (err) {
         return;
       }
+      throw new Error('Should not have authenticated user');
     });
   });
 

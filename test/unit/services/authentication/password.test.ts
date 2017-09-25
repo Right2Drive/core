@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 
 import { hashPassword, checkPassword } from '@/services/authentication/password';
+import { numSubstrings } from '@/utilities/functions/numSubstrings';
 
 describe('authentication service password module', function () {
   const simplePassword = 'simplepassword';
@@ -42,7 +43,3 @@ describe('authentication service password module', function () {
     }
   });
 });
-
-function numSubstrings(str: string, substr: string) {
-  return str.split(substr).length - 1;
-}

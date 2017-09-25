@@ -11,6 +11,10 @@ export function createToken(username: string, type: UserType) {
   // TODO: Look into expiry
   // TODO: Look into audience/issuer
   return new Promise<string>((resolve, reject) => {
+    // Validate arguments
+    (!username || !type) && reject(new TypeError('missing arguments'));
+
+    // Generate token
     jwt.sign(
       { // Payload
         username,
