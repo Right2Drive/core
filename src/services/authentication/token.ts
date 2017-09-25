@@ -19,9 +19,10 @@ export function createToken(username: string, type: UserType) {
       // Secret
       process.env.JWT_SECRET,
       { // Options
-        issuer: process.env.JWT_ISSUER,
-        audience: process.env.JWT_AUDIENCE,
-        expiresIn: process.env.JWT_EXPIRES,
+        // [Thanks to Jamie Hill @ https://stackoverflow.com/a/40560953/4155595]
+        ...process.env.JWT_ISSUER && { issuer: process.env.JWT_ISSUER },
+        ...process.env.JWT_AUDIENCE && { audience: process.env.JWT_AUDIENCE },
+        ...process.env.JWT_EXPIRES && { expiresIn: process.env.JWT_EXPIRES },
       },
       (err, encoded) => {
         err && reject(err);

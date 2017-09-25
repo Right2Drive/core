@@ -1,65 +1,65 @@
+import { expect } from 'chai';
+
 import { authenticate } from '@/services/authentication/authenticate';
 import { findOne } from '@/database/User';
 import { DatabaseUser } from '@/models/User';
 import { UserType } from '@/models/User/UserType';
+import { createToken } from '@/services/authentication/token';
+
+interface InjectedFunctions {
+  findUser: typeof findOne;
+  createToken: typeof createToken;
+}
 
 describe('authentication service authenticate module', function () {
+  const fakeToken = 'myVeryFakeToken';
   const username = 'username';
   const simplePassword = 'simplepassword';
   const complexPassword = '_C0MP|3><?';
   const simpleHash = '$2a$11$mkIzes44pQ96o/l/lEUhJewwAGhiQva3HC2lTelnx6NlcKP2LPnu2';
   const complexHash = '$2a$11$xNyDJJcxz5Xu.J3V6CRS6uxqbt1oTKp.sGeToI9WqwLluaAKIXnia';
   let fakeUser: DatabaseUser;
-  let findUser: typeof findOne;
+  let injectedFunctions: InjectedFunctions;
 
   before(function () {
-    // Define the findUser function
-    findUser = (username: string) => new Promise((resolve) => {
-      setTimeout(() => resolve(), 0);
-    });
+    // Define the injected functions
+    injectedFunctions = {
+      findUser: (username: string) => Promise.resolve(fakeUser),
+      createToken: () => Promise.resolve(fakeToken),
+    };
   });
 
-  describe('should successfully authenticate', function () {
+  describe('should successfully authenticate and return token', function () {
 
-    it('with simple password', function (done) {
-      test(simplePassword, simpleHash, done);
+    it('with simple password', async function () {
+      return test(simplePassword, simpleHash);
     });
 
-    it('with complex password', function (done) {
-      test(complexPassword, complexHash, done);
+    it('with complex password', async function () {
+      return test(complexPassword, complexHash);
     });
 
-    function test(password: string, hash: string, done: MochaDone) {
+    async function test(password: string, hash: string) {
       setupUser(username, hash, UserType.BASIC);
-      authenticate(username, password, findOne)
-        .then((token) => {
-          done();
-        })
-        .catch(err => done(err));
+      const token = await authenticate(username, password, injectedFunctions);
+      expect(token).to.be.eq(fakeToken);
     }
   });
 
-  describe('should return a token', function () {
-
-    it('with the correct user type', function (done) {
+  describe('should fail to authenticate', function () {
+    it('with simple password', async function () {
       setupUser(username, simpleHash, UserType.BASIC);
-      authenticate(username, simplePassword, findOne)
-        .then((token) => {
-          done('incomplete');
-        })
-        .catch(err => done(err));
+      let token: string;
+      try {
+        token = await authenticate(username, 'wrong_password', injectedFunctions);
+        throw new Error('Should not have authenticated user');
+      } catch (err) {
+        return;
+      }
     });
   });
 
-  describe('should fail to authenticate', function () {
-
-  });
-
-  function setupUser(
-    username: string,
-    hash: string,
-    userType: UserType,
-  ) {
+  function setupUser(username: string, hash: string, userType: UserType) {
     fakeUser = {
       username,
       hash,
