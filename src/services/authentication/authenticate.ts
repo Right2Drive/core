@@ -1,12 +1,7 @@
 import { checkPassword } from '@/services/authentication/password';
-import * as UserDb from '@/database/User';
+import { findUser } from '@/database/User';
 import { DatabaseUser } from '@/models/User';
 import { createToken } from '@/services/authentication/token';
-
-const defaultFunctions = {
-  createToken,
-  findUser: UserDb.findUser,
-};
 
 /**
  * Authenticate a user, and return a jwt if they are successful
@@ -15,12 +10,12 @@ const defaultFunctions = {
  * @param {string} [password] Password to validate
  * @param {object} [injectedFunctions=defaultFunctions] Injected dependencies, for testing purposes
  */
-export function authenticate(username: string, password: string, injectedFunctions = defaultFunctions) {
-  const userPromise = injectedFunctions.findUser(username).then((user) => {
+export function authenticate(username: string, password: string) {
+  const userPromise = findUser(username).then((user) => {
     return checkPassword(password, user.hash)
       .then((authenticated) => {
         if (authenticated) {
-          return injectedFunctions.createToken(user.username, user.userType);
+          return createToken(user.username, user.userType);
         }
 
         throw new Error('User not authenticated');

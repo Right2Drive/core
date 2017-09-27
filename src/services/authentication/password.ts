@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 
 import logger from '@/utilities/logger';
 
-const SALT_ROUNDS = 11;
+export const SALT_ROUNDS = 11;
 
 /**
  * Hash a password and return a promise resolving to the hash
