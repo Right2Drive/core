@@ -1,24 +1,24 @@
-import database, { tableNames, normalize } from '@/database';
+import database, { tableNames, execute } from '@/database';
 import logger from '@/utilities/logger';
 import { DatabaseUser } from '@/models/User';
 
 const userTable = () => database()(tableNames.USERS);
 
-const core = {
-  selectOne(select: string, username: string) {
-    return userTable().select(select).where({
+const builders = {
+  selectFromUser(attributes: string, username: string) {
+    return userTable().select(attributes).where({
       username,
     });
   },
 
-  findOne(username: string) {
-    return core.selectOne('*', username);
+  findUser(username: string) {
+    return builders.selectFromUser('*', username);
   },
 
-  findOneHash(username: string) {
-    return core.selectOne('hash', username);
+  findUserHash(username: string) {
+    return builders.selectFromUser('hash', username);
   },
 };
 
-export const findOne = (username: string) => normalize<DatabaseUser>(core.findOne(username));
-export const findOneHash = (username: string) => normalize<string>(core.findOneHash(username));
+export const findUser = (username: string) => execute<DatabaseUser>(builders.findUser(username));
+export const findUserHash = (username: string) => execute<string>(builders.findUserHash(username));

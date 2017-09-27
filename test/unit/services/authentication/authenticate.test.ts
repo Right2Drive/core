@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 
 import { authenticate } from '@/services/authentication/authenticate';
-import { findOne } from '@/database/User';
+import { findUser } from '@/database/User';
 import { DatabaseUser } from '@/models/User';
 import { UserType } from '@/models/User/UserType';
 import { createToken } from '@/services/authentication/token';
 
 interface InjectedFunctions {
-  findUser: typeof findOne;
+  findUser: typeof findUser;
   createToken: typeof createToken;
 }
 

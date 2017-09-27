@@ -5,7 +5,7 @@ import { createToken } from '@/services/authentication/token';
 
 const defaultFunctions = {
   createToken,
-  findUser: UserDb.findOne,
+  findUser: UserDb.findUser,
 };
 
 /**
@@ -16,7 +16,7 @@ const defaultFunctions = {
  * @param {object} [injectedFunctions=defaultFunctions] Injected dependencies, for testing purposes
  */
 export function authenticate(username: string, password: string, injectedFunctions = defaultFunctions) {
-  const bluebird = injectedFunctions.findUser(username).then((user) => {
+  const userPromise = injectedFunctions.findUser(username).then((user) => {
     return checkPassword(password, user.hash)
       .then((authenticated) => {
         if (authenticated) {
@@ -27,5 +27,5 @@ export function authenticate(username: string, password: string, injectedFunctio
       });
   });
 
-  return Promise.resolve<string>(bluebird);
+  return Promise.resolve<string>(userPromise);
 }
