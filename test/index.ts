@@ -12,5 +12,12 @@ afterEach(function () {
   td.reset();
 });
 
-// Import tests
-import './unit';
+/** Unit Tests */
+describe('@unit', function () {
+  require('./unit');
+});
+
+/** Integration Tests */
+describe('@integration', function () {
+  require('./integration');
+});

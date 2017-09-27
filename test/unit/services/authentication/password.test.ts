@@ -28,25 +28,25 @@ describe('authentication service password module', function () {
         mockBcrypt();
       });
 
-      it('simple password', async function () {
-        td.when(bcryptMock.hash(simplePassword, SALT_ROUNDS)).thenResolve(fakeHash);
-        await test(simplePassword);
-        td.verify(bcryptMock.hash(simplePassword, SALT_ROUNDS), { times: 1 });
+      it('simple password', function () {
+        td.when(bcryptMock.hash(simplePassword, SALT_ROUNDS), { times: 1 }).thenResolve(fakeHash);
+        return test(simplePassword);
       });
 
-      it('complex password', async function () {
-        td.when(bcryptMock.hash(complexPassword, SALT_ROUNDS)).thenResolve(fakeHash);
-        await test(complexPassword);
-        td.verify(bcryptMock.hash(complexPassword, SALT_ROUNDS), { times: 1 });
+      it('complex password', function () {
+        td.when(bcryptMock.hash(complexPassword, SALT_ROUNDS), { times: 1 }).thenResolve(fakeHash);
+        return test(complexPassword);
       });
     });
 
-    it('simple password', async function () {
-      return test(simplePassword);
-    });
+    describe('with bcrypt @slow',function () {
+      it('simple password', function () {
+        return test(simplePassword);
+      });
 
-    it('complex password', async function () {
-      return test(complexPassword);
+      it('complex password', function () {
+        return test(complexPassword);
+      });
     });
 
     async function test(password: string) {
@@ -67,29 +67,29 @@ describe('authentication service password module', function () {
         mockBcrypt();
       });
 
-      it('simple password', async function () {
-        td.when(bcryptMock.compare(simplePassword, simpleHash)).thenResolve(true);
-        const result = await test(simplePassword, simpleHash, true);
-        td.verify(bcryptMock.compare(simplePassword, simpleHash), { times: 1 });
+      it('simple password', function () {
+        td.when(bcryptMock.compare(simplePassword, simpleHash), { times: 1 }).thenResolve(true);
+        return test(simplePassword, simpleHash, true);
       });
 
-      it('complex password', async function () {
-        td.when(bcryptMock.compare(complexPassword, complexHash)).thenResolve(true);
-        const result = await test(complexPassword, complexHash, true);
-        td.verify(bcryptMock.compare(complexPassword, complexHash), { times: 1 });
+      it('complex password', function () {
+        td.when(bcryptMock.compare(complexPassword, complexHash), { times: 1 }).thenResolve(true);
+        return test(complexPassword, complexHash, true);
       });
     });
 
-    it('simple password', async function () {
-      return test(simplePassword, simpleHash, true);
-    });
+    describe('with bcrypt @slow', function () {
+      it('simple password', function () {
+        return test(simplePassword, simpleHash, true);
+      });
 
-    it('complex password', async function () {
-      return test(complexPassword, complexHash, true);
-    });
+      it('complex password', function () {
+        return test(complexPassword, complexHash, true);
+      });
 
-    it('incorrect password', async function () {
-      return test(simplePassword, incorrectHash, false);
+      it('incorrect password', function () {
+        return test(simplePassword, incorrectHash, false);
+      });
     });
 
     async function test(password: string, hash: string, expected: boolean) {
