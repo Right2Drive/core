@@ -6,7 +6,7 @@
  * @param searchElement {any} The element to check for
  * @param fromIndex {number} The index to start from
  */
-function arrayIncludes<T>(arr: T[], searchElement: T, fromIndex?: number) {
+export default function arrayIncludes<T>(arr: T[], searchElement: T, fromIndex?: number) {
 
   // 1. Let O be ? ToObject(arr value).
   if (arr == null) {

@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { urlencoded, json } from 'body-parser';
 
+import arrayIncludes from '@/utilities/functions/arrayIncludes';
+
 export enum ParserType {
   JSON = 0x1,
   URL_ENCODED = 0x2,
