@@ -1,8 +1,11 @@
 import { RequestHandler } from 'express';
 
-export default function authorized(type: string): RequestHandler {
+import { UserType } from '@/models/User/UserType';
+import arrayIncludes from '@/utilities/functions/arrayIncludes';
+
+export default function authorized(...types: UserType[]): RequestHandler {
   return (req, res, next) => {
-    if (req.user.type !== type) {
+    if (!arrayIncludes(types, req.user.type)) {
       // Send unauthorized status
       res.sendStatus(401);
       res.end();

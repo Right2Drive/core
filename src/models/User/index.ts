@@ -1,6 +1,6 @@
 import { UserType } from '@/models/User/UserType';
 
-interface User {
+export interface User {
   [k: string]: any;
   username: string;
   userType: UserType;

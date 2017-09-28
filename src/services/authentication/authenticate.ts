@@ -2,6 +2,7 @@ import { checkPassword } from '@/services/authentication/password';
 import { findUser } from '@/database/User';
 import { DatabaseUser } from '@/models/User';
 import { createToken } from '@/services/authentication/token';
+import logger from '@/utilities/logger';
 
 /**
  * Authenticate a user, and return a jwt if they are successful
@@ -18,7 +19,7 @@ export function authenticate(username: string, password: string) {
           return createToken(user.username, user.userType);
         }
 
-        throw new Error('User not authenticated');
+        logger.error('User not authenticated');
       });
   });
 

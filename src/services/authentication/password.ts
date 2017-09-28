@@ -23,8 +23,5 @@ export function hashPassword(password: string) {
  * @param hash {string} Hash to compare to password
  */
 export function checkPassword(password: string, hash: string) {
-  const checkPromise = bcrypt.compare(password, hash);
-  checkPromise.catch(reason => logger.error(reason));
-
-  return checkPromise;
+  return bcrypt.compare(password, hash).catch(reason => logger.error(reason));
 }

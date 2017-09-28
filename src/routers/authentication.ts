@@ -6,14 +6,14 @@ const router = createRouter();
 
 router.post('/login', (req, res) => {
   if (!req.body.password || !req.body.username) {
-    res.sendStatus(400).end();
+    res.sendStatus(400);
     return;
   }
 
   authenticate(req.body.username, req.body.password)
     // Unauthorized
     .catch((err) => {
-      res.sendStatus(401).end();
+      res.sendStatus(401);
     })
     // Authorized
     .then((token) => {
@@ -22,9 +22,9 @@ router.post('/login', (req, res) => {
     // Server error
     .catch((err) => {
       logger.debug(err);
-      res.sendStatus(500).end();
+      res.sendStatus(500);
     });
 });
 
-// TODO: Add jsdoc
+/** Authentication Router */
 export default router;

@@ -18,12 +18,16 @@ export default function createRouter(...parserTypes: ParserType[]) {
 
   const contains = (el: ParserType) => arrayIncludes(parserTypes, el);
 
-  if (contains(ParserType.JSON)) {
-
-  } else if (contains(ParserType.URL_ENCODED)) {
-
-  } else {
+  if (parserTypes.length === 0) {
     // Default to JSON
+    router.use(json());
+  } else {
+    if (contains(ParserType.JSON)) {
+      router.use(json());
+    }
+    if (contains(ParserType.URL_ENCODED)) {
+      router.use(urlencoded({ extended: true }));
+    }
   }
 
   return router;

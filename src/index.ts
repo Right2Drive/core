@@ -6,6 +6,9 @@ import logger from '@/utilities/logger';
 import routers from '@/routers';
 import middleware from '@/middleware';
 import { connect } from '@/database';
+import { createUser } from '@/database/User';
+import { hashPassword } from '@/services/authentication/password';
+import { UserType } from '@/models/User/UserType';
 
 // Load configuration from .env file at root
 config({

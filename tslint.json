@@ -9,6 +9,12 @@
     "max-line-length": [
       true,
       150
+    ],
+    "align": [
+      true,
+      "statements",
+      "members",
+      "elements"
     ]
   }
 }
