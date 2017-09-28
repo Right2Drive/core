@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "tslint-config-airbnb"
+  ],
+  "rules": {
+    "ter-prefer-arrow-callback": false,
+    "no-console": true,
+    "no-increment-decrement": false,
+    "max-line-length": [
+      true,
+      150
+    ]
+  }
+}
