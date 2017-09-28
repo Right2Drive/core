@@ -42,10 +42,10 @@ router.put('/create', async (req, res) => {
   // Create the new user
   try {
     const hash = await hashPassword(password);
-    await UserDb.createUser(username, hash, userType);
+    const result = await UserDb.createUser(username, hash, userType);
   } catch (err) {
     logger.error(`Failed to create user: ${username}`);
-    return void res.sendStatus(500);
+    return void res.status(500).send('Failed to create user');
   }
 
   logger.info(`Created new user: ${username}`);
@@ -71,7 +71,7 @@ router.put('/create', async (req, res) => {
  */
 router.delete('/delete/:username', (req, res) => {
   if (!req.params || !req.params.username) {
-    return void res.sendStatus(400);
+    return void res.status(400).send('Missing username parameter');
   }
   const { username } = req.params;
 
@@ -91,10 +91,10 @@ async function deleteUser(username: string, res: express.Response): Promise<void
     await UserDb.deleteUser(username);
   } catch (err) {
     logger.error(`Failed to delete user ${username}`);
-    return void res.sendStatus(500);
+    return void res.status(500).send('Failed to delete user');
   }
 
-  return void res.sendStatus(200);
+  return void res.status(200).send('Successfully deleted user');
 }
 
 function validateCreate(body: any) {

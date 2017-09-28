@@ -33,12 +33,15 @@ export const tableNames: Readonly<Table> = {
  */
 export function execute<T>(qb: knex.QueryBuilder): Promise<T> {
   // Use Promise.resolve to normalize to a regular ES6 Promise
-  return Promise.resolve(
+  const promise = Promise.resolve(
     // Call `then` merely to start the query to the database
     qb.then(v => v),
-  ).catch((err) => {
-    logger.error(new Error('Database error has occurred'));
+  );
+  promise.catch((err) => {
+    logger.error('Database error has occurred');
   });
+
+  return promise;
 }
 
 /**
