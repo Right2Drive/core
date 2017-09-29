@@ -5,7 +5,6 @@ import logger from '@/utilities/logger';
 const router = createRouter();
 
 /**
- *
  * @api {post} /authentication/login Login
  * @apiName Login
  * @apiGroup Authentication
@@ -23,13 +22,10 @@ const router = createRouter();
        "password": "Actua11yBroke"
    }
  *
- *
  * @apiSuccessExample {type} Success-Response:
    {
        token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmM2YxYTNiZjk3OGU0MNDVkY2Y2YSJ9.TLkEYpBlKrDxNO73edz-bXJ6XH1rqx8LimtkY
    }
- *
- *
  */
 router.post('/login', (req, res) => {
   if (!req.body.password || !req.body.username) {

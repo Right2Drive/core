@@ -10,6 +10,7 @@
     "debug": "npm run build:dev && npm run concurrently -- \"npm run watch\" \"npm run serve:debug\"",
     "clean": "rimraf dist/*",
     "start:prod": "node dist/app.js",
+    "doc": "node_modules/.bin/apidoc -i ./ -o apidoc/ -e node_modules",
     "build": "npm run build:prod",
     "build:dev": "npm run webpack -- --env=dev",
     "build:prod": "npm run webpack -- --env=prod",
@@ -34,7 +35,7 @@
   "dependencies": {
     "bcrypt": "1.0.3",
     "body-parser": "1.18.0",
-    "chai": "^4.1.2",
+    "chai": "4.1.2",
     "compression": "1.7.0",
     "cors": "2.8.4",
     "dotenv": "4.0.0",
@@ -52,7 +53,7 @@
   "devDependencies": {
     "@types/bcrypt": "1.0.0",
     "@types/body-parser": "1.16.5",
-    "@types/chai": "^4.0.4",
+    "@types/chai": "4.0.4",
     "@types/compression": "0.0.34",
     "@types/cors": "2.8.1",
     "@types/dotenv": "4.0.1",
@@ -65,17 +66,25 @@
     "@types/node": "8.0.28",
     "@types/webpack-env": "1.13.1",
     "@types/winston": "2.3.5",
+    "apidoc": "^0.17.6",
     "awesome-typescript-loader": "3.2.3",
     "concurrently": "3.5.0",
     "friendly-errors-webpack-plugin": "1.6.1",
     "nodemon": "1.12.0",
     "rimraf": "2.6.1",
     "source-map-loader": "0.2.1",
-    "testdouble": "^3.2.6",
+    "testdouble": "3.2.6",
     "tslint": "5.7.0",
     "tslint-config-airbnb": "5.2.1",
     "webpack": "3.5.6",
     "webpack-merge": "4.1.0",
     "webpack-node-externals": "1.6.0"
+  },
+  "apidoc": {
+    "name": "The Core",
+    "version": "0.0.1",
+    "description": "Robust REST API Boilerplate",
+    "title": "CoreAPI",
+    "url": "https://github.com/Right2Drive/node-rest-boilerplate"
   }
 }

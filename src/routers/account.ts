@@ -14,7 +14,6 @@ const router = createRouter();
 /* ******************  Routes ***********************/
 
 /**
- *
  * @api {put} /api/account/create Create new account
  * @apiName CreateAccount
  * @apiGroup Account
@@ -56,7 +55,6 @@ router.put('/create', async (req, res) => {
 
 
 /**
- *
  * @api {delete} /api/account/delete/:username Delete specified account
  * @apiName Delete An Account
  * @apiGroup Account
@@ -68,8 +66,6 @@ router.put('/create', async (req, res) => {
  * @apiError (500) {String} Failed to delete user
  *
  * @apiSuccess (200) {String} Successfully deleted user
- *
- *
  */
 router.delete('/delete/:username', async (req, res) => {
   if (!req.params || !req.params.username) {
@@ -80,6 +76,17 @@ router.delete('/delete/:username', async (req, res) => {
   return deleteUser(username, res);
 }, authorized(UserType.ADMIN));
 
+/**
+ * @api {delete} /account/delete Delete current account
+ * @apiName Delete Current Account
+ * @apiGroup Account
+ * @apiVersion  0.0.1
+ *
+ *
+ * @apiError (500) {String} Failed to delete user
+ *
+ * @apiSuccess (200) {String} Successfully deleted user
+ */
 router.delete('/delete', async (req, res) => {
   const { username } = req.user;
   return deleteUser(username, res);
