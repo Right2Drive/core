@@ -21,19 +21,20 @@ const router = createRouter();
  * @apiVersion 0.0.1
  *
  *
- * @apiParam {string} username Username for account
- * @apiParam {string} password Password for account
- * @apiParam {string} userType Type of account
+ * @apiParam {String} username Username for account
+ * @apiParam {String} password Password for account
+ * @apiParam {String} userType Type of account
  *
- * @apiError (400)
+ * @apiError (400) {String} BadRequest Invalid request body
+ * @apiError (500) {String} ServerError Failed to create user
  *
- * @apiSuccess (200)
+ * @apiSuccess (200) {String} AccountCreated Successfully created user
  *
  * TODO: Add error and success messages
  */
 router.put('/create', async (req, res) => {
   if (!validateCreate(req.body)) {
-    return void res.sendStatus(400);
+    return void res.status(400).send('Invalid request body');
   }
 
   // Deconstruct object
@@ -42,7 +43,7 @@ router.put('/create', async (req, res) => {
   // Create the new user
   try {
     const hash = await hashPassword(password);
-    const result = await UserDb.createUser(username, hash, userType);
+    await UserDb.createUser(username, hash, userType);
   } catch (err) {
     logger.error(`Failed to create user: ${username}`);
     return void res.status(500).send('Failed to create user');
@@ -50,7 +51,7 @@ router.put('/create', async (req, res) => {
 
   logger.info(`Created new user: ${username}`);
 
-  res.sendStatus(200);
+  res.status(200).send('Successfully created user');
 }, authorized(UserType.ADMIN));
 
 
@@ -64,12 +65,13 @@ router.put('/create', async (req, res) => {
  *
  * @apiParam  {String} username Username of account to delete
  *
- * @apiSuccess (200)
+ * @apiError (500) {String} Failed to delete user
  *
- * TODO: Add error and success messages
+ * @apiSuccess (200) {String} Successfully deleted user
+ *
  *
  */
-router.delete('/delete/:username', (req, res) => {
+router.delete('/delete/:username', async (req, res) => {
   if (!req.params || !req.params.username) {
     return void res.status(400).send('Missing username parameter');
   }
