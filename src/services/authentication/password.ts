@@ -2,6 +2,7 @@ import * as bcrypt from 'bcrypt';
 
 import logger from '@/utilities/logger';
 
+/** Number of salt rounds to perform. **Must be at least 10** */
 export const SALT_ROUNDS = 11;
 
 /**
@@ -11,7 +12,7 @@ export const SALT_ROUNDS = 11;
  *
  * @returns {Promise<string>} The password hash
  */
-export function hashPassword(password: string) {
+export async function hashPassword(password: string) {
   const hashPromise = bcrypt.hash(password, SALT_ROUNDS);
   hashPromise.catch(reason => logger.error(reason));
 
@@ -26,7 +27,7 @@ export function hashPassword(password: string) {
  *
  * @returns {Promise<boolean>} Whether the password matches the hash
  */
-export function checkPassword(password: string, hash: string) {
+export async function checkPassword(password: string, hash: string) {
   const promise = bcrypt.compare(password, hash);
   promise.catch(reason => logger.error(reason));
 

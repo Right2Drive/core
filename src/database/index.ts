@@ -25,6 +25,7 @@ export function connect() {
   });
 }
 
+/** Names of tables in the database */
 export const tableNames: Readonly<Table> = {
   USERS: 'users',
 };
@@ -33,10 +34,10 @@ export const tableNames: Readonly<Table> = {
  * Execute a QueryBuilder and normalize result to an ES6 promise
  *
  * @param {QueryBuilder} [qb] The query builder to execute and normalize
- *
  * @returns {Promise<T>} A promise resolving to the result of the query
+ * @async
  */
-export function execute<T>(qb: knex.QueryBuilder): Promise<T> {
+export async function execute<T>(qb: knex.QueryBuilder): Promise<T> {
   // Use Promise.resolve to normalize to a regular ES6 Promise
   const promise = Promise.resolve(
     // Call `then` merely to start the query to the database

@@ -1,6 +1,7 @@
 import createRouter from '@/utilities/functions/createRouter';
 import { authenticate } from '@/services/authentication/authenticate';
 import logger from '@/utilities/logger';
+import { StatusCode } from '@/models/statusCodes';
 
 const router = createRouter();
 
@@ -29,23 +30,23 @@ const router = createRouter();
  */
 router.post('/login', (req, res) => {
   if (!req.body.password || !req.body.username) {
-    res.sendStatus(400);
+    res.sendStatus(StatusCode.BAD_REQUEST);
     return;
   }
 
   authenticate(req.body.username, req.body.password)
     // Unauthorized
     .catch((err) => {
-      res.sendStatus(401);
+      res.sendStatus(StatusCode.UNAUTHORIZED);
     })
     // Authorized
     .then((token) => {
-      res.status(200).json({ token });
+      res.status(StatusCode.OK).json({ token });
     })
     // Server error
     .catch((err) => {
       logger.debug(err);
-      res.sendStatus(500);
+      res.sendStatus(StatusCode.INTERNAL_SERVER_ERROR);
     });
 });
 

@@ -8,6 +8,7 @@ import objectValues from '@/utilities/functions/objectValues';
 import { hashPassword } from '@/services/authentication/password';
 import * as UserDb from '@/database/User';
 import logger from '@/utilities/logger';
+import { StatusCode } from '@/models/statusCodes';
 
 const router = createRouter();
 
@@ -28,12 +29,10 @@ const router = createRouter();
  * @apiError (500) {String} ServerError Failed to create user
  *
  * @apiSuccess (200) {String} AccountCreated Successfully created user
- *
- * TODO: Add error and success messages
  */
 router.put('/create', async (req, res) => {
   if (!validateCreate(req.body)) {
-    return void res.status(400).send('Invalid request body');
+    return void res.status(StatusCode.BAD_REQUEST).send('Invalid request body');
   }
 
   // Deconstruct object
@@ -45,12 +44,12 @@ router.put('/create', async (req, res) => {
     await UserDb.createUser(username, hash, userType);
   } catch (err) {
     logger.error(`Failed to create user: ${username}`);
-    return void res.status(500).send('Failed to create user');
+    return void res.status(StatusCode.INTERNAL_SERVER_ERROR).send('Failed to create user');
   }
 
   logger.info(`Created new user: ${username}`);
 
-  res.status(200).send('Successfully created user');
+  res.status(StatusCode.OK).send('Successfully created user');
 }, authorized(UserType.ADMIN));
 
 
@@ -69,7 +68,7 @@ router.put('/create', async (req, res) => {
  */
 router.delete('/delete/:username', async (req, res) => {
   if (!req.params || !req.params.username) {
-    return void res.status(400).send('Missing username parameter');
+    return void res.status(StatusCode.BAD_REQUEST).send('Missing username parameter');
   }
   const { username } = req.params;
 
@@ -100,10 +99,10 @@ async function deleteUser(username: string, res: express.Response): Promise<void
     await UserDb.deleteUser(username);
   } catch (err) {
     logger.error(`Failed to delete user ${username}`);
-    return void res.status(500).send('Failed to delete user');
+    return void res.status(StatusCode.INTERNAL_SERVER_ERROR).send('Failed to delete user');
   }
 
-  return void res.status(200).send('Successfully deleted user');
+  return void res.status(StatusCode.OK).send('Successfully deleted user');
 }
 
 function validateCreate(body: any) {

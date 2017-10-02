@@ -29,7 +29,7 @@
     "lint:test:fix": "npm run lint:test -- --fix",
     "lint:src": "npm run lint:core -- \"src/**/*.ts\"",
     "lint:src:fix": "npm run lint:src -- --fix",
-    "lint:core": "node_modules/.bin/tslint -c tslint.json",
+    "lint:core": "node_modules/.bin/tslint -c tslint.json -p tsconfig.json",
     "concurrently": "node_modules/.bin/concurrently -k -p \"[{name}]\" -n \"Webpack,Node\" -c \"cyan.bold,green.bold\""
   },
   "dependencies": {

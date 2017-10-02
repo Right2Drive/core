@@ -9,7 +9,7 @@ import { UserType } from '@/models/User/UserType';
  *
  * @returns {Promise<string>} A JSON web token
  */
-export function createToken(username: string, type: UserType) {
+export async function createToken(username: string, type: UserType) {
   return new Promise<string>((resolve, reject) => {
     // Validate arguments
     (!username || !type) && reject(new TypeError('missing arguments'));

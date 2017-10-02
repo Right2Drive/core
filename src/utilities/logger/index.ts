@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as morgan from 'morgan';
 
 import { LoggerMethods, Loggers, LogMessage } from '@/models/logger';
-import levels from './levels';
+import levels from '@/utilities/logger/levels';
 
 let loggers: Loggers = null;
 
@@ -104,6 +104,7 @@ function generateLoggerMethod(name: string) {
 
 function initMorgan(infoLogger: LoggerInstance) {
   const stream = {
+    /** write to stream */
     write(message: string) {
       infoLogger.info(message);
     },

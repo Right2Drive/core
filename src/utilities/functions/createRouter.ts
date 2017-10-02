@@ -3,6 +3,7 @@ import { urlencoded, json } from 'body-parser';
 
 import arrayIncludes from '@/utilities/functions/arrayIncludes';
 
+/** The different body formats that can be supported by a route */
 export enum ParserType {
   JSON = 0x1,
   URL_ENCODED = 0x2,

@@ -6,26 +6,31 @@ import { UserType } from '@/models/User/UserType';
 const userTable = () => database()(tableNames.USERS);
 
 const builders = {
+  /** QueryBuilder for selecting user */
   selectFromUser(attributes: string, username: string) {
     return userTable().select(attributes).where({
       username,
     });
   },
 
+  /** QueryBuilder for deleting user */
   deleteUser(username: string) {
     return userTable().where({
       username,
     }).delete();
   },
 
+  /** QueryBuilder for finding a single user */
   findUser(username: string) {
     return builders.selectFromUser('*', username);
   },
 
+  /** QueryBuilder for selecting user hash */
   findUserHash(username: string) {
     return builders.selectFromUser('hash', username);
   },
 
+  /** QueryBuilder for creating user */
   createUser(username: string, hash: string, userType: UserType) {
     if (hash.indexOf('$') === -1) {
       throw new Error('Trying to store password in database');
@@ -89,8 +94,10 @@ export async function findUserHash(username: string) {
  * @returns {Promise<void>} A void promise
  *
  * @throws {Error} The username already exists
+ *
+ * @async
  */
-export function createUser(username: string, hash: string, userType: UserType) {
+export async function createUser(username: string, hash: string, userType: UserType) {
   return execute<void>(builders.createUser(username, hash, userType));
 }
 
@@ -102,7 +109,9 @@ export function createUser(username: string, hash: string, userType: UserType) {
  * @returns {Promise<void>} A void promise
  *
  * @throws {Error} The user does not exist
+ *
+ * @async
  */
-export function deleteUser(username: string) {
+export async function deleteUser(username: string) {
   return execute<void>(builders.deleteUser(username));
 }

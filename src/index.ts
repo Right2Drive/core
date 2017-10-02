@@ -19,8 +19,9 @@ config({
 connect();
 
 // Setup express server
+const DEFAULT_PORT = 8090;
 const app = Express();
-const port = process.env.PORT || 8090;
+const port = process.env.PORT || DEFAULT_PORT;
 
 // Configure middleware
 middleware.apply(app);

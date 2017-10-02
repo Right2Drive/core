@@ -1,4 +1,5 @@
 import { ErrorRequestHandler } from 'express';
+import { StatusCode } from '@/models/statusCodes';
 
 /**
  * Express Middleware to handle when a jwt token is not provided
@@ -8,7 +9,7 @@ import { ErrorRequestHandler } from 'express';
 export default function jwtUnauthorized(): ErrorRequestHandler {
   return (err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
-      res.status(401).end();
+      res.status(StatusCode.UNAUTHORIZED).end();
       return;
     }
 
