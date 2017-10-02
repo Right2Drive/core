@@ -50,7 +50,13 @@ function validateSingleUser(username: string, results: any[]) {
 /* ***************** Exports **********************/
 
 /**
- * TODO: Document
+ * Find the user for the given username
+ *
+ * @param {string} [username] The username of the target user
+ *
+ * @returns {Promise<DatabaseUser>}
+ *
+ * @throws {Error} the user does not exist
  */
 export async function findUser(username: string) {
   const results = await execute<DatabaseUser[]>(builders.findUser(username));
@@ -59,7 +65,13 @@ export async function findUser(username: string) {
 }
 
 /**
- * TODO: Document
+ * Find the user hash for the given username
+ *
+ * @param {string} [username] The username of the target user
+ *
+ * @returns {Promise<string>} The hash of the user
+ *
+ * @throws {Error} the user does not exist
  */
 export async function findUserHash(username: string) {
   const results = await execute<string[]>(builders.findUserHash(username));
@@ -68,14 +80,28 @@ export async function findUserHash(username: string) {
 }
 
 /**
- * TODO: Document
+ * Create a user with the given properties
+ *
+ * @param {string} [username] The username of the user
+ * @param {string} [hash] The password hash for the user
+ * @param {UserType} [userType] The type of the user
+ *
+ * @returns {Promise<void>} A void promise
+ *
+ * @throws {Error} The username already exists
  */
 export function createUser(username: string, hash: string, userType: UserType) {
   return execute<void>(builders.createUser(username, hash, userType));
 }
 
 /**
- * TODO: Document
+ * Remove a user from the database
+ *
+ * @param {string} [username] The username of the user to delete
+ *
+ * @returns {Promise<void>} A void promise
+ *
+ * @throws {Error} The user does not exist
  */
 export function deleteUser(username: string) {
   return execute<void>(builders.deleteUser(username));

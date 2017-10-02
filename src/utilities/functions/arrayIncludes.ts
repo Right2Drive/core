@@ -2,9 +2,11 @@
 /**
  * Check if an array includes an element
  *
- * @param arr {array} The array to search
- * @param searchElement {any} The element to check for
- * @param fromIndex {number} The index to start from
+ * @param {array} [arr] The array to search
+ * @param {any} [searchElement] The element to check for
+ * @param {number} [fromIndex] The index to start from
+ *
+ * @returns {boolean} Whether or not the array includes an element
  */
 export default function arrayIncludes<T>(arr: T[], searchElement: T, fromIndex?: number) {
 
