@@ -3,6 +3,7 @@ import { urlencoded, json } from 'body-parser';
 
 import arrayIncludes from '@/utilities/functions/arrayIncludes';
 
+/** The different body formats that can be supported by a route */
 export enum ParserType {
   JSON = 0x1,
   URL_ENCODED = 0x2,
@@ -18,12 +19,16 @@ export default function createRouter(...parserTypes: ParserType[]) {
 
   const contains = (el: ParserType) => arrayIncludes(parserTypes, el);
 
-  if (contains(ParserType.JSON)) {
-
-  } else if (contains(ParserType.URL_ENCODED)) {
-
-  } else {
+  if (parserTypes.length === 0) {
     // Default to JSON
+    router.use(json());
+  } else {
+    if (contains(ParserType.JSON)) {
+      router.use(json());
+    }
+    if (contains(ParserType.URL_ENCODED)) {
+      router.use(urlencoded({ extended: true }));
+    }
   }
 
   return router;

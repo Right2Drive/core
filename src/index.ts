@@ -6,6 +6,9 @@ import logger from '@/utilities/logger';
 import routers from '@/routers';
 import middleware from '@/middleware';
 import { connect } from '@/database';
+import { createUser } from '@/database/User';
+import { hashPassword } from '@/services/authentication/password';
+import { UserType } from '@/models/User/UserType';
 
 // Load configuration from .env file at root
 config({
@@ -16,8 +19,9 @@ config({
 connect();
 
 // Setup express server
+const DEFAULT_PORT = 8090;
 const app = Express();
-const port = process.env.PORT || 8090;
+const port = process.env.PORT || DEFAULT_PORT;
 
 // Configure middleware
 middleware.apply(app);

@@ -18,8 +18,10 @@ export interface LoggerMethods {
   error(msg: LogMessage): void;
 }
 
+/** Definition for logger object */
 export interface Loggers {
   [key: string]: LoggerInstance;
 }
 
+/** Input type for log messages */
 export type LogMessage = any;

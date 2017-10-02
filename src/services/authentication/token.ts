@@ -5,11 +5,11 @@ import { UserType } from '@/models/User/UserType';
 /**
  * Generate a json web token for the specified user
  *
- * @param username {string} User to sign the token for
+ * @param {string} [username] User to sign the token for
+ *
+ * @returns {Promise<string>} A JSON web token
  */
-export function createToken(username: string, type: UserType) {
-  // TODO: Look into expiry
-  // TODO: Look into audience/issuer
+export async function createToken(username: string, type: UserType) {
   return new Promise<string>((resolve, reject) => {
     // Validate arguments
     (!username || !type) && reject(new TypeError('missing arguments'));

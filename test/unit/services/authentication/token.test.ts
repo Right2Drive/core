@@ -6,8 +6,9 @@ import { UserType } from '@/models/User/UserType';
 import { numSubstrings } from '@/utilities/functions/numSubstrings';
 
 describe('authentication service token module', function () {
-  const validUserType = UserType.BASIC;
-  const validUsername = 'username';
+  const VALID_USER_TYPE = UserType.BASIC;
+  const VALID_USERNAME = 'username';
+
   let circleObject: any;
 
   before(function () {
@@ -16,21 +17,22 @@ describe('authentication service token module', function () {
   });
 
   describe('should generate token', function () {
+    const EXPECTED_PERIODS = 2;
 
     it('that is encrypted', async function () {
-      const token = await createToken(validUsername, validUserType);
+      const token = await createToken(VALID_USERNAME, VALID_USER_TYPE);
       expect(token).to.be.a('string');
-      expect(numSubstrings(token, '.')).to.be.eq(2);
+      expect(numSubstrings(token, '.')).to.be.eq(EXPECTED_PERIODS);
     });
 
     it('that has user payload', async function () {
-      const token = await createToken(validUsername, validUserType);
+      const token = await createToken(VALID_USERNAME, VALID_USER_TYPE);
       return new Promise((resolve, reject) => {
         verify(token, process.env.JWT_SECRET, {}, (err, payload) => {
           err && reject(err);
 
-          expect((payload as any).username).to.be.eq(validUsername);
-          expect((payload as any).type).to.be.eq(validUserType);
+          expect((payload as any).username).to.be.eq(VALID_USERNAME);
+          expect((payload as any).type).to.be.eq(VALID_USER_TYPE);
           resolve();
         });
       });
@@ -38,24 +40,24 @@ describe('authentication service token module', function () {
   });
 
   describe('should fail to generate token', function () {
-    const emptyUsername = '';
-    const invalidUsername = undefined as string;
-    const invalidUserType = undefined as UserType;
+    const EMPTY_USERNAME = '';
+    const INVALID_USERNAME = undefined as string;
+    const INVALID_USER_TYPE = undefined as UserType;
 
     it('when empty username is provided', async function () {
-      return test(emptyUsername, validUserType);
+      return test(EMPTY_USERNAME, VALID_USER_TYPE);
     });
 
     it('when no username is provided', async function () {
-      return test(invalidUsername, validUserType);
+      return test(INVALID_USERNAME, VALID_USER_TYPE);
     });
 
     it('when no type is provided', async function () {
-      return test(validUsername, invalidUserType);
+      return test(VALID_USERNAME, INVALID_USER_TYPE);
     });
 
     it('when argument cannot be serialized', async function () {
-      return test(circleObject, validUserType);
+      return test(circleObject, VALID_USER_TYPE);
     });
 
     async function test(username: string, type: UserType) {
